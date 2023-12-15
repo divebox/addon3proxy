@@ -1,0 +1,110 @@
+[
+  {
+    "id": "auth-user",
+    "execute-command": "/home/ubuntu/addon3proxy/webhook/auth-user.sh",
+    "command-working-directory": "/etc/3proxy/conf",
+    "response-headers":
+    [
+      {
+        "name": "Access-Control-Allow-Origin",
+        "value": "*"
+      }
+    ],
+    "include-command-output-in-response": true,
+    "pass-environment-to-command":
+    [
+      {
+        "source": "payload",
+        "name": "user",
+        "envname": "USER"
+      },
+      {
+        "source": "payload",
+        "name": "pass",
+        "envname": "PASS"
+
+      },
+      {
+        "source": "payload",
+        "name": "proxy",
+        "envname": "PROXY"
+      }
+    ],
+#    "trigger-rule":
+#    {
+#      "or":
+#      [
+#        { "match": { "type": "ip-whitelist", "ip-range": "213.110.115.55/32" } }
+#      ]
+#    }
+  },
+  {
+    "id": "deauth-user",
+    "execute-command": "/home/ubuntu/addon3proxy/webhook/deauth-user.sh",
+    "command-working-directory": "/etc/3proxy/conf",
+    "response-headers":
+    [
+      {
+        "name": "Access-Control-Allow-Origin",
+        "value": "*"
+      }
+    ],
+    "include-command-output-in-response": true,
+    "pass-environment-to-command":
+    [
+      {
+        "source": "payload",
+        "name": "user",
+        "envname": "USER"
+      },
+      {
+        "source": "payload",
+        "name": "pass",
+        "envname": "PASS"
+
+      },
+      {
+        "source": "payload",
+        "name": "proxy",
+        "envname": "PROXY"
+      }
+    ],
+#    "trigger-rule":
+#    {
+#      "or":
+#      [
+#        { "match": { "type": "ip-whitelist", "ip-range": "213.110.115.55/32" } }
+#      ]
+#    }
+  },
+  {
+    "id": "get_ports",
+    "execute-command": "/home/ubuntu/addon3proxy/webhook/get_ports.sh",
+    "command-working-directory": "/etc/3proxy/conf",
+    "response-headers":
+    [
+      {
+        "name": "Access-Control-Allow-Origin",
+        "value": "*"
+      }
+    ],
+    "include-command-output-in-response": true,
+    "pass-environment-to-command":
+    [
+      {
+        "source": "payload",
+        "name": "ip",
+        "envname": "IP"
+      }
+    ],
+#    "trigger-rule":
+#    {
+#      "or":
+#      [
+#        { "match": { "type": "ip-whitelist", "ip-range": "213.110.115.55/32" } }
+#      ]
+#    }
+  }
+]
+
+
