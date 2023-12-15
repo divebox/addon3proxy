@@ -1,9 +1,9 @@
 1. Поднимаем VPS с Ubuntu 22, добавляем дополнительные ip адреса, получаем список ip адресов, на которых буду слушать наши прокси. Подразумевается что мы работаем от дефолтного юзера ubuntu**
 
-2. Клоним репу, билдим и устанавливаем 3proxy:**
-git clone https://github.com/divebox/addon3proxy.git*
-cd addon3proxy/3proxy*
-ln -s Makefile.Linux Makefile*
+2. Клоним репу, билдим и устанавливаем 3proxy:
+git clone https://github.com/divebox/addon3proxy.git
+cd addon3proxy/3proxy
+ln -s Makefile.Linux Makefile
 make
 sudo make install
 cd ..
