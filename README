@@ -1,4 +1,4 @@
-1. Поднимаем VPS с Ubuntu 22, добавляем дополнительные ip адреса, получаем список ip адресов, на которых буду слушать наши прокси. Подразумевается что мы работаем от дефолтного юзера ubuntu
+1. Поднимаем VPS с Ubuntu 22, добавляем дополнительные ip адреса. Подразумевается что мы работаем от дефолтного юзера ubuntu
 
 2. Клоним репу, билдим и устанавливаем 3proxy:
 git clone https://github.com/3proxy/3proxy.git -b devel
@@ -12,15 +12,27 @@ cd ..
 git clone https://github.com/divebox/addon3proxy.git
 
 4. Сохраняем список ip в файл ./scripts/proxyip.list и генерируем конфиги для 3proxy, после чего запускаем сервис
+Если наш впс совсем не впс, а AWS EC2 инстанс, следуюет использовать скрипт gen_config_ONLY_AWS.sh
+а в файл proxyip.list сохранять в формате WHITE_IP	VPS_IP
+
 cd ./scripts
-echo -e “135.125.190.111\n51.89.114.147\n51.89.114.148” > proxyip.list
+
+echo -e "135.125.190.111\n51.89.114.147\n51.89.114.148" > proxyip.list
+## для амазона: echo -e "135.125.190.111\t172.31.1.35\n135.15.10.11\t172.31.21.45" > proxyip.list
+
 bash gen_config.sh
-mv ./conf/* /etc/3proxy/conf
-systemctl start 3proxy
+### для амазона: bash gen_config_ONLY_AWS.sh
+
+sudo chown -R proxy:proxy ./conf
+sudo mv ./conf/* /etc/3proxy/conf
+sudo systemctl start 3proxy
 cd ..
 
-5. Открываем на редактирование scripts/hook.json, находим там закомментированный блок "trigger-rule", удаляем “#” и прописываем туда ip адрес сервера с админкой
+
+5. Открываем на редактирование webhook/hook.json, находим там закомментированный блок "trigger-rule", удаляем "#" и прописываем туда ip адрес сервера с админкой
+Т.е. вайтлистим ip с которого разрешено работать
 
 6. Устанавливаем и запускаем webhook (https://github.com/adnanh/webhook)
+sudo apt-get update
 sudo apt-get install webhook
 bash start_webhook.sh
