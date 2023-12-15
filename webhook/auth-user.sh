@@ -3,8 +3,12 @@
 IP=`echo $PROXY | awk -F':' '{print $1}'`
 PORT=`echo $PROXY | awk -F':' '{print $2}'`
 
-if [ -z "${IP}" ]; then echo "ip addr is empty"; exit 1; fi
-if [ -z "${PORT}" ]; then echo "port is empty"; exit 1; fi
+if [ -z "${IP}" ]; then echo "Error! ip addr is empty"; exit 1; fi
+if [ -z "${PORT}" ]; then echo "Error! port is empty"; exit 1; fi
+if [ -z "${USER}" ]; then echo "Error! user is empty"; exit 1; fi
+if [ -z "${PASS}" ]; then echo "Error! password is empty"; exit 1; fi
+
+
 
 touch passwd
 grep "^${USER}:CL:${PASS}$" passwd > /dev/null
@@ -22,15 +26,3 @@ else
     echo "user $USER already allowed"
 fi
 
-
-#cat $IP.cfg > $IP.cfg.$$
-#cat $IP.cfg.$$ | sort | uniq > $IP.cfg
-#echo "user $USER added"
-#grep "^allow ${USER}$" $IP.cfg
-
-#echo $0
-#echo $1
-#echo $2
-
-#echo $PROXY_IP > 123.log
-#echo $1 >> 123.log
