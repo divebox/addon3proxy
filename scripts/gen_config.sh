@@ -25,6 +25,13 @@ include /conf/bandlimiters
 
 cat proxyip.list | while read IP
 do
+    ls -1 /etc/3proxy/conf/ | grep ".cfg$" | awk -F'.' '{print $1"."$2"."$3"."$4}' | uniq | grep -x $IP > /dev/null
+    if [ $? -eq 0 ]
+    then
+        echo "this ip already used"
+        continue
+    fi
+
     shuf -i 20000-30000 -n 100 | while read PORT
     do
         echo -e "\n### $IP:$PORT\nauth strong\nflush" >> ./conf/3proxy.cfg

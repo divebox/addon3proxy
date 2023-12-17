@@ -1,10 +1,3 @@
-#### 51.20.156.125:1081
-#auth strong
-#flush
-#include /conf/51.20.156.125.cfg
-#monitor /conf/51.20.156.125.cfg
-#socks -p1081 -i172.31.29.171 -e172.31.29.171
-
 rm -rf ./conf
 mkdir ./conf
 
@@ -30,8 +23,15 @@ include /conf/bandlimiters
 
 
 
-cat list_clean | while read IP
+cat proxyip.list | while read IP
 do
+    ls -1 /etc/3proxy/conf/ | grep ".cfg$" | awk -F'.' '{print $1"."$2"."$3"."$4}' | uniq | grep -x $IP > /dev/null
+    if [ $? -eq 0 ]
+    then
+        echo "this ip already used"
+        continue
+    fi
+
     WHITE_IP=`echo $IP | awk '{print $1}'`
     VPC_IP=`echo $IP | awk '{print $2}'`
 
@@ -44,10 +44,4 @@ do
         echo -e "allow admin" > ./conf/${WHITE_IP}.$PORT.cfg
 
     done
-
-#    echo "$WHITE_IP"
 done
-
-scp -r ./conf ec2-user@16.16.131.221:/tmp
-
-#shuf -i 20000-30000 -n 10
